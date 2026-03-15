@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Home - Campus Placement System{% endblock %}
+{% block content %}
+<div class="row align-items-center py-5">
+    <div class="col-lg-6">
+        <h1 class="display-5 fw-bold text-dark mb-3">Campus Placement Management System</h1>
+        <p class="lead text-muted">Streamline recruitment. Connect students with companies. Manage placements with ease.</p>
+        <div class="d-flex gap-3 mt-4">
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+            </a>
+            <a href="#roles" class="btn btn-outline-secondary btn-lg px-4">Learn More</a>
+        </div>
+    </div>
+    <div class="col-lg-6 text-center d-none d-lg-block">
+        <i class="bi bi-briefcase-fill display-1 text-primary opacity-75"></i>
+    </div>
+</div>
+
+<section id="roles" class="py-5">
+    <h2 class="text-center mb-4">Who are you?</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-person-badge display-4 text-primary mb-3"></i>
+                    <h5 class="card-title">Student</h5>
+                    <p class="card-text text-muted">Register, upload resume, browse jobs and apply. Track your applications.</p>
+                    <a href="{{ url_for('register_student') }}" class="btn btn-outline-primary">Register</a>
+                    <a href="{{ url_for('login') }}?role=student" class="btn btn-link">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-building display-4 text-success mb-3"></i>
+                    <h5 class="card-title">Company</h5>
+                    <p class="card-text text-muted">Post jobs, view applicants, shortlist candidates. Manage your hiring.</p>
+                    <a href="{{ url_for('register_company') }}" class="btn btn-outline-success">Register</a>
+                    <a href="{{ url_for('login') }}?role=company" class="btn btn-link">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-shield-lock display-4 text-dark mb-3"></i>
+                    <h5 class="card-title">Admin</h5>
+                    <p class="card-text text-muted">Approve companies, manage students & jobs, view statistics.</p>
+                    <a href="{{ url_for('login') }}?role=admin" class="btn btn-dark">Admin Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

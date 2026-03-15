@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}My Applications - Campus Placement System{% endblock %}
+{% block body %}
+<div class="d-flex">
+    <div class="sidebar d-none d-md-block">
+        <nav class="nav flex-column">
+            <a class="nav-link" href="{{ url_for('student_dashboard') }}"><i class="bi bi-grid me-2"></i>Dashboard</a>
+            <a class="nav-link" href="{{ url_for('student_jobs') }}"><i class="bi bi-briefcase me-2"></i>Browse Jobs</a>
+            <a class="nav-link active" href="{{ url_for('student_applications') }}"><i class="bi bi-list-check me-2"></i>My Applications</a>
+            <a class="nav-link" href="{{ url_for('student_profile') }}"><i class="bi bi-person me-2"></i>Profile</a>
+        </nav>
+    </div>
+    <div class="main-content flex-grow-1">
+        <h4 class="mb-4">My Applications</h4>
+        <div class="card">
+            <div class="card-body p-0">
+                {% if applications %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Job Title</th><th>Company</th><th>Status</th><th>Applied On</th></tr></thead>
+                        <tbody>
+                        {% for app in applications %}
+                        <tr>
+                            <td>{{ app[1] }}</td>
+                            <td>{{ app[2] }}</td>
+                            <td><span class="badge bg-{{ 'success' if app[3] == 'selected' else 'warning' if app[3] == 'shortlisted' else 'secondary' if app[3] == 'applied' else 'danger' }} badge-status">{{ app[3] }}</span></td>
+                            <td>{{ app[4].strftime('%d %b %Y') if app[4] else '-' }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted p-4 mb-0">You haven't applied to any jobs yet. <a href="{{ url_for('student_jobs') }}">Browse jobs</a>.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
