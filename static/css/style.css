@@ -1,0 +1,232 @@
+/* PRABHAV Holistic Health Institute - College UI theme */
+:root{
+  --college-navy: #0b1f3a;
+  --college-navy-2: #102a4c;
+  --college-rose: #b2557a;
+  --college-rose-2: #d4779a;
+  --college-gold: #f2c14e;
+  --college-bg: #f6f8fc;
+  --college-text: #0f172a;
+  --college-muted: #64748b;
+  --college-border: rgba(15, 23, 42, 0.10);
+  --college-shadow: 0 12px 28px rgba(2, 6, 23, 0.08);
+  --sidebar-width: 260px;
+}
+
+html, body { height: 100%; }
+body{
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--college-text);
+  background: radial-gradient(1200px 600px at 10% 0%, rgba(178,85,122,0.08), transparent 55%),
+              radial-gradient(900px 500px at 90% 0%, rgba(11,31,58,0.10), transparent 55%),
+              var(--college-bg);
+}
+
+/* Navbar */
+.navbar-college{
+  background: linear-gradient(90deg, var(--college-navy), var(--college-navy-2));
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.20);
+}
+.navbar-college .nav-link{
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+.navbar-college .nav-link:hover{ color: #fff; }
+.navbar-college .navbar-text{ color: rgba(255,255,255,0.85) !important; }
+.nav-divider{
+  display: inline-block;
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.18);
+}
+
+.navbar-brand{
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.brand-logo{
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.92);
+  padding: 4px;
+  box-shadow: 0 8px 18px rgba(2, 6, 23, 0.18);
+}
+.brand-text{ line-height: 1.15; }
+.brand-institute{
+  color: var(--college-gold);
+  font-weight: 800;
+}
+.brand-prefix{ color: rgba(255,255,255,0.92); }
+
+/* Layout */
+.main-content{ flex: 1; padding: 1.5rem; }
+
+/* Sidebar */
+.sidebar{
+  width: var(--sidebar-width);
+  min-height: calc(100vh - 72px);
+  background: linear-gradient(180deg, rgba(11,31,58,0.98), rgba(16,42,76,0.98));
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1rem;
+}
+.sidebar .nav-link{
+  color: rgba(255,255,255,0.88);
+  padding: 0.65rem 1rem;
+  border-radius: 0.6rem;
+  margin: 0.18rem 0.75rem;
+  font-weight: 600;
+}
+.sidebar .nav-link i{ width: 1.25rem; opacity: 0.95; }
+.sidebar .nav-link:hover{
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+}
+.sidebar .nav-link.active{
+  background: linear-gradient(90deg, rgba(178,85,122,0.35), rgba(242,193,78,0.18));
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Cards / tables */
+.card{
+  border: 1px solid var(--college-border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 0 rgba(2, 6, 23, 0.02);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover{ transform: translateY(-2px); box-shadow: var(--college-shadow); }
+.card-header{
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--college-border);
+  font-weight: 700;
+}
+.table th{ font-weight: 700; color: #0b1f3a; }
+.badge-status{ text-transform: capitalize; font-weight: 700; }
+
+/* Buttons */
+.btn{ border-radius: 0.85rem; font-weight: 700; }
+.btn-primary{
+  background: linear-gradient(90deg, var(--college-rose), var(--college-rose-2));
+  border: none;
+  box-shadow: 0 10px 22px rgba(178,85,122,0.25);
+}
+.btn-primary:hover{
+  background: linear-gradient(90deg, #9f4669, #c96b8e);
+  box-shadow: 0 14px 28px rgba(178,85,122,0.30);
+}
+.btn-outline-light{ border-width: 2px; }
+
+/* Home hero */
+.hero-college{
+  border-radius: 1.25rem;
+  padding: 2.2rem 2rem;
+  background: linear-gradient(120deg, rgba(11,31,58,0.98), rgba(16,42,76,0.96));
+  color: #fff;
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.22);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.hero-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.92);
+  font-weight: 700;
+}
+.hero-title{
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  font-size: clamp(1.7rem, 2.6vw, 2.5rem);
+}
+.hero-subtitle{
+  color: rgba(255,255,255,0.82);
+  font-size: 1.05rem;
+}
+.hero-card{
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.hero-logo{
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.92);
+  padding: 6px;
+}
+.mini-stat{
+  border-radius: 1rem;
+  padding: 0.85rem 0.9rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.mini-stat-label{ color: rgba(255,255,255,0.70); font-size: 0.85rem; font-weight: 700; }
+.mini-stat-value{ color: rgba(255,255,255,0.95); font-weight: 800; }
+
+/* Footer */
+.site-footer{
+  background: linear-gradient(90deg, var(--college-navy), var(--college-navy-2));
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-logo{
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.92);
+  padding: 4px;
+}
+
+/* Forms */
+.form-control, .form-select{
+  border-radius: 0.9rem;
+  border: 1px solid var(--college-border);
+  padding: 0.7rem 0.9rem;
+}
+.form-control:focus, .form-select:focus{
+  border-color: rgba(178,85,122,0.45);
+  box-shadow: 0 0 0 0.2rem rgba(178,85,122,0.18);
+}
+.form-hint{ color: var(--college-muted); font-size: 0.9rem; }
+
+.password-rules{
+  background: rgba(15,23,42,0.03);
+  border: 1px solid var(--college-border);
+  border-radius: 1rem;
+  padding: 0.85rem 0.95rem;
+}
+.rule-item{
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  color: var(--college-muted);
+  font-size: 0.92rem;
+}
+.rule-item + .rule-item{ margin-top: 0.4rem; }
+.rule-icon{
+  width: 1.15rem;
+  height: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(100,116,139,0.15);
+  color: rgba(100,116,139,0.9);
+  flex: 0 0 auto;
+  margin-top: 0.05rem;
+}
+.rule-item.is-valid{ color: #166534; }
+.rule-item.is-valid .rule-icon{ background: rgba(22,101,52,0.12); color: #166534; }
+.rule-item.is-invalid{ color: #b91c1c; }
+.rule-item.is-invalid .rule-icon{ background: rgba(185,28,28,0.12); color: #b91c1c; }

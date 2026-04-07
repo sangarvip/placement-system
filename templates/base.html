@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Campus Placement System by PRABHAV Holistic Health Institute{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-college sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='img/prabhav-logo.png') }}" class="brand-logo me-2" alt="PRABHAV Holistic Health Institute Logo">
+                <span class="brand-text d-none d-sm-inline">
+                    <span class="brand-prefix">Campus Placement System by </span><span class="brand-institute">PRABHAV Holistic Health Institute</span>
+                </span>
+                <span class="brand-text d-inline d-sm-none">
+                    <span class="brand-institute">PRABHAV</span>
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('services') }}">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+                    <li class="nav-item d-none d-lg-block"><span class="nav-divider mx-2"></span></li>
+                    {% if session.get('user_id') %}
+                    <li class="nav-item">
+                        <span class="navbar-text text-light me-3">
+                            <i class="bi bi-person-circle"></i> {{ session.get('name', 'User') }}
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="btn btn-sm btn-light ms-lg-2" href="{{ url_for('login') }}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container mt-2">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% block body %}
+    <div class="container my-4">
+        {% block content %}{% endblock %}
+    </div>
+    {% endblock %}
+
+    <footer class="site-footer mt-auto">
+        <div class="container py-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <img src="{{ url_for('static', filename='img/prabhav-logo.png') }}" class="footer-logo" alt="PRABHAV Holistic Health Institute Logo">
+                    <div>
+                        <div class="fw-semibold text-white">PRABHAV Holistic Health Institute</div>
+                        <div class="small text-white-50">Campus Placement System</div>
+                    </div>
+                </div>
+                <div class="small text-white-50">
+                    © <span id="currentYear"></span> PRABHAV Holistic Health Institute
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        (function () {
+            var el = document.getElementById('currentYear');
+            if (el) el.textContent = String(new Date().getFullYear());
+        })();
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Applicants - {{ job[1] }} - Campus Placement System by PRABHAV Holistic Health Institute{% endblock %}
+{% block body %}
+<div class="d-flex">
+    <div class="sidebar d-none d-md-block" style="background: linear-gradient(180deg, #0d5c2e, #1a7d3e);">
+        <nav class="nav flex-column">
+            <a class="nav-link" href="{{ url_for('company_dashboard') }}"><i class="bi bi-grid me-2"></i>Dashboard</a>
+            <a class="nav-link" href="{{ url_for('company_post_job') }}"><i class="bi bi-plus-circle me-2"></i>Post Job</a>
+            <a class="nav-link" href="{{ url_for('company_jobs') }}"><i class="bi bi-briefcase me-2"></i>My Jobs</a>
+        </nav>
+    </div>
+    <div class="main-content flex-grow-1">
+        <h4 class="mb-4">Applicants for: {{ job[1] }}</h4>
+        <div class="card">
+            <div class="card-body p-0">
+                {% if applicants %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>CGPA</th>
+                                <th>Resume</th>
+                                <th>Status</th>
+                                <th>Applied</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for a in applicants %}
+                        <tr>
+                            <td>{{ a[2] }}</td>
+                            <td>{{ a[3] }}</td>
+                            <td>{{ a[4] }}</td>
+                            <td>{{ a[5] or '-' }}</td>
+                            <td>{% if a[6] %}<a href="/static/{{ a[6] }}" target="_blank" class="btn btn-sm btn-outline-primary">View</a>{% else %}-{% endif %}</td>
+                            <td><span class="badge bg-{{ 'success' if a[7] == 'selected' else 'warning' if a[7] == 'shortlisted' else 'secondary' if a[7] == 'applied' else 'danger' }} badge-status">{{ a[7] }}</span></td>
+                            <td>{{ a[8].strftime('%d %b %Y') if a[8] else '-' }}</td>
+                            <td>
+                                {% if a[7] != 'selected' and a[7] != 'rejected' %}
+                                <form method="post" action="{{ url_for('company_update_applicant_status', application_id=a[0]) }}" class="d-inline">
+                                    <input type="hidden" name="status" value="shortlisted">
+                                    <button type="submit" class="btn btn-sm btn-outline-warning">Shortlist</button>
+                                </form>
+                                <form method="post" action="{{ url_for('company_update_applicant_status', application_id=a[0]) }}" class="d-inline">
+                                    <input type="hidden" name="status" value="selected">
+                                    <button type="submit" class="btn btn-sm btn-outline-success">Select</button>
+                                </form>
+                                {% endif %}
+                                {% if a[7] != 'rejected' %}
+                                <form method="post" action="{{ url_for('company_update_applicant_status', application_id=a[0]) }}" class="d-inline">
+                                    <input type="hidden" name="status" value="rejected">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Reject</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted p-4 mb-0">No applicants for this job yet.</p>
+                {% endif %}
+            </div>
+        </div>
+        <a href="{{ url_for('company_jobs') }}" class="btn btn-outline-secondary mt-3">Back to Jobs</a>
+    </div>
+</div>
+{% endblock %}

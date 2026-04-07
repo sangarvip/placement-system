@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Login - Campus Placement System by PRABHAV Holistic Health Institute{% endblock %}
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h5 class="mb-0"><i class="bi bi-box-arrow-in-right me-2"></i>Login</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" action="{{ url_for('login') }}" data-validate-password="true" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">Login as</label>
+                        <select name="role" class="form-select" required>
+                            <option value="student" {{ 'selected' if request.args.get('role') == 'student' else '' }}>Student</option>
+                            <option value="company" {{ 'selected' if request.args.get('role') == 'company' else '' }}>Company</option>
+                            <option value="admin" {{ 'selected' if request.args.get('role') == 'admin' else '' }}>Admin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required
+                               value="{{ request.form.get('email', '') }}" placeholder="your@email.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required autocomplete="current-password" aria-describedby="passwordRules">
+                        <div id="passwordRules" class="password-rules mt-2" role="status" aria-live="polite">
+                            <div class="rule-item" data-rule="len"><span class="rule-icon"><i class="bi bi-dot"></i></span><span>At least 8 characters</span></div>
+                            <div class="rule-item" data-rule="upper"><span class="rule-icon"><i class="bi bi-dot"></i></span><span>At least 1 uppercase letter (A–Z)</span></div>
+                            <div class="rule-item" data-rule="lower"><span class="rule-icon"><i class="bi bi-dot"></i></span><span>At least 1 lowercase letter (a–z)</span></div>
+                            <div class="rule-item" data-rule="digit"><span class="rule-icon"><i class="bi bi-dot"></i></span><span>At least 1 number (0–9)</span></div>
+                            <div class="rule-item" data-rule="special"><span class="rule-icon"><i class="bi bi-dot"></i></span><span>At least 1 special character (@, #, $, %, etc.)</span></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <hr>
+                <p class="text-center text-muted small mb-0">
+                    Student? <a href="{{ url_for('register_student') }}">Register</a> &nbsp;|&nbsp;
+                    Company? <a href="{{ url_for('register_company') }}">Register</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

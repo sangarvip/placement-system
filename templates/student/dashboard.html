@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard - Campus Placement System by PRABHAV Holistic Health Institute{% endblock %}
+{% block body %}
+<div class="d-flex">
+    <div class="sidebar d-none d-md-block">
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="{{ url_for('student_dashboard') }}"><i class="bi bi-grid me-2"></i>Dashboard</a>
+            <a class="nav-link" href="{{ url_for('student_jobs') }}"><i class="bi bi-briefcase me-2"></i>Browse Jobs</a>
+            <a class="nav-link" href="{{ url_for('student_applications') }}"><i class="bi bi-list-check me-2"></i>My Applications</a>
+            <a class="nav-link" href="{{ url_for('student_profile') }}"><i class="bi bi-person me-2"></i>Profile</a>
+        </nav>
+    </div>
+    <div class="main-content flex-grow-1">
+        {% if edit_profile and profile %}
+        <div class="card mb-4">
+            <div class="card-header">Edit Profile</div>
+            <div class="card-body">
+                <form method="post" action="{{ url_for('student_profile') }}" enctype="multipart/form-data">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" name="name" value="{{ profile[1] }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" value="{{ profile[2] }}" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Department</label>
+                            <input type="text" class="form-control" name="department" value="{{ profile[3] }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">CGPA</label>
+                            <input type="number" step="0.01" class="form-control" name="cgpa" value="{{ profile[4] or '' }}" placeholder="e.g. 8.5">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" name="phone" value="{{ profile[6] or '' }}">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Resume (PDF)</label>
+                            <input type="file" class="form-control" name="resume" accept=".pdf">
+                            {% if profile[5] %}<small class="text-muted">Current: {{ profile[5] }}</small>{% endif %}
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Save Profile</button>
+                            <a href="{{ url_for('student_dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <h4 class="mb-4">Student Dashboard</h4>
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 opacity-75">Total Applications</h6>
+                        <h3 class="mb-0">{{ total_apps|default(0) }}</h3>
+                    </div>
+                </div>
+            </div>
+            {% if profile %}
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="text-muted">Profile</h6>
+                        <p class="mb-1"><strong>{{ profile[1] }}</strong> · {{ profile[3] }}{% if profile[4] %} · CGPA: {{ profile[4] }}{% endif %}</p>
+                        {% if profile[5] %}<a href="/static/{{ profile[5] }}" target="_blank" class="btn btn-sm btn-outline-primary">View Resume</a>{% else %}<span class="text-muted">No resume uploaded</span>{% endif %}
+                        <a href="{{ url_for('student_profile') }}" class="btn btn-sm btn-outline-secondary ms-2">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Recent Applications</span>
+                <a href="{{ url_for('student_applications') }}" class="btn btn-sm btn-primary">View All</a>
+            </div>
+            <div class="card-body p-0">
+                {% if applications is defined and applications %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Job</th><th>Company</th><th>Status</th><th>Date</th></tr></thead>
+                        <tbody>
+                        {% for app in applications %}
+                        <tr>
+                            <td>{{ app[1] }}</td>
+                            <td>{{ app[2] }}</td>
+                            <td><span class="badge bg-{{ 'success' if app[3] == 'selected' else 'warning' if app[3] == 'shortlisted' else 'secondary' if app[3] == 'applied' else 'danger' }} badge-status">{{ app[3] }}</span></td>
+                            <td>{{ app[4].strftime('%d %b %Y') if app[4] else '-' }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted p-4 mb-0">No applications yet. <a href="{{ url_for('student_jobs') }}">Browse jobs</a> to apply.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

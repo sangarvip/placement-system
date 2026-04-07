@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - Campus Placement System by PRABHAV Holistic Health Institute{% endblock %}
+{% block body %}
+<div class="d-flex">
+    <div class="sidebar d-none d-md-block" style="background: linear-gradient(180deg, #2d3748, #1a202c);">
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="{{ url_for('admin_dashboard') }}"><i class="bi bi-grid me-2"></i>Dashboard</a>
+            <a class="nav-link" href="{{ url_for('admin_manage_students') }}"><i class="bi bi-people me-2"></i>Students</a>
+            <a class="nav-link" href="{{ url_for('admin_manage_companies') }}"><i class="bi bi-building me-2"></i>Companies</a>
+            <a class="nav-link" href="{{ url_for('admin_manage_jobs') }}"><i class="bi bi-briefcase me-2"></i>Jobs</a>
+            <a class="nav-link" href="{{ url_for('admin_applications') }}"><i class="bi bi-list-check me-2"></i>Applications</a>
+            <a class="nav-link" href="{{ url_for('admin_statistics') }}"><i class="bi bi-bar-chart me-2"></i>Statistics</a>
+        </nav>
+    </div>
+    <div class="main-content flex-grow-1">
+        <h4 class="mb-4">Admin Dashboard</h4>
+        {% if stats_page and total_students is defined %}
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card bg-dark text-white">
+                    <div class="card-body">
+                        <h6 class="opacity-75">Total Students</h6>
+                        <h3 class="mb-0">{{ total_students }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h6 class="opacity-75">Placed Students</h6>
+                        <h3 class="mb-0">{{ placed }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h6 class="opacity-75">Placement Rate</h6>
+                        <h3 class="mb-0">{% if total_students %}{{ "%.1f"|format((placed / total_students) * 100) }}%{% else %}0%{% endif %}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if by_company %}
+        <div class="card mb-4">
+            <div class="card-header">Placements by Company</div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead><tr><th>Company</th><th>Hired</th></tr></thead>
+                    <tbody>
+                    {% for row in by_company %}<tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>{% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+        {% if by_department %}
+        <div class="card mb-4">
+            <div class="card-header">Placements by Department</div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead><tr><th>Department</th><th>Placed</th></tr></thead>
+                    <tbody>
+                    {% for row in by_department %}<tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>{% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+        {% elif show_applications and applications %}
+        <div class="card">
+            <div class="card-header">All Applications</div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Student</th><th>Job</th><th>Company</th><th>Status</th><th>Date</th></tr></thead>
+                        <tbody>
+                        {% for a in applications %}
+                        <tr>
+                            <td>{{ a[1] }} ({{ a[2] }})</td>
+                            <td>{{ a[3] }}</td>
+                            <td>{{ a[4] }}</td>
+                            <td><span class="badge bg-{{ 'success' if a[5] == 'selected' else 'warning' if a[5] == 'shortlisted' else 'secondary' if a[5] == 'applied' else 'danger' }}">{{ a[5] }}</span></td>
+                            <td>{{ a[6].strftime('%d %b %Y') if a[6] else '-' }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        {% if stats %}
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <h6 class="text-muted">Students</h6>
+                        <h3 class="mb-0 text-primary">{{ stats.students }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-success">
+                    <div class="card-body">
+                        <h6 class="text-muted">Approved Companies</h6>
+                        <h3 class="mb-0 text-success">{{ stats.companies }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-warning">
+                    <div class="card-body">
+                        <h6 class="text-muted">Pending Companies</h6>
+                        <h3 class="mb-0 text-warning">{{ stats.pending_companies }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-info">
+                    <div class="card-body">
+                        <h6 class="text-muted">Active Jobs</h6>
+                        <h3 class="mb-0 text-info">{{ stats.jobs }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-dark">
+                    <div class="card-body">
+                        <h6 class="text-muted">Total Applications</h6>
+                        <h3 class="mb-0">{{ stats.applications }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h6 class="opacity-75">Placed</h6>
+                        <h3 class="mb-0">{{ stats.placed }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="card">
+            <div class="card-body text-center text-muted py-5">
+                <i class="bi bi-shield-check display-4"></i>
+                <p class="mt-2 mb-0">Use the sidebar to manage students, companies, jobs and view statistics.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

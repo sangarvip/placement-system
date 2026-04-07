@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Home - Campus Placement System by PRABHAV Holistic Health Institute{% endblock %}
+{% block content %}
+<section class="hero-college">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <div class="hero-badge mb-3">
+                <i class="bi bi-mortarboard me-2"></i>Placement Cell Portal
+            </div>
+            <h1 class="hero-title mb-3">
+                <span class="brand-prefix">Campus Placement System by </span><span class="brand-institute">PRABHAV Holistic Health Institute</span>
+            </h1>
+            <p class="hero-subtitle mb-4">
+                A modern portal for students, companies, and administrators to manage placements with clarity and speed.
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg px-4">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                </a>
+                <a href="#roles" class="btn btn-outline-light btn-lg px-4">Explore Roles</a>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="hero-card">
+                <div class="d-flex align-items-center gap-3">
+                    <img src="{{ url_for('static', filename='img/prabhav-logo.png') }}" class="hero-logo" alt="PRABHAV Holistic Health Institute Logo">
+                    <div>
+                        <div class="fw-semibold text-white">PRABHAV Holistic Health Institute</div>
+                        <div class="small text-white-50">Holistic learning · Career growth</div>
+                    </div>
+                </div>
+                <hr class="border-light opacity-25 my-3">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="mini-stat">
+                            <div class="mini-stat-label">Students</div>
+                            <div class="mini-stat-value">Dashboard</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mini-stat">
+                            <div class="mini-stat-label">Companies</div>
+                            <div class="mini-stat-value">Hiring</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mini-stat">
+                            <div class="mini-stat-label">Admin</div>
+                            <div class="mini-stat-value">Approvals & Analytics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="roles" class="py-5">
+    <h2 class="text-center mb-4">Who are you?</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-person-badge display-4 text-primary mb-3"></i>
+                    <h5 class="card-title">Student</h5>
+                    <p class="card-text text-muted">Register, upload resume, browse jobs and apply. Track your applications.</p>
+                    <a href="{{ url_for('register_student') }}" class="btn btn-outline-primary">Register</a>
+                    <a href="{{ url_for('login') }}?role=student" class="btn btn-link">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-building display-4 text-success mb-3"></i>
+                    <h5 class="card-title">Company</h5>
+                    <p class="card-text text-muted">Post jobs, view applicants, shortlist candidates. Manage your hiring.</p>
+                    <a href="{{ url_for('register_company') }}" class="btn btn-outline-success">Register</a>
+                    <a href="{{ url_for('login') }}?role=company" class="btn btn-link">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-shield-lock display-4 text-dark mb-3"></i>
+                    <h5 class="card-title">Admin</h5>
+                    <p class="card-text text-muted">Approve companies, manage students & jobs, view statistics.</p>
+                    <a href="{{ url_for('login') }}?role=admin" class="btn btn-dark">Admin Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

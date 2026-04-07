@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Company Dashboard - Campus Placement System by PRABHAV Holistic Health Institute{% endblock %}
+{% block body %}
+<div class="d-flex">
+    <div class="sidebar d-none d-md-block" style="background: linear-gradient(180deg, #0d5c2e, #1a7d3e);">
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="{{ url_for('company_dashboard') }}"><i class="bi bi-grid me-2"></i>Dashboard</a>
+            <a class="nav-link" href="{{ url_for('company_post_job') }}"><i class="bi bi-plus-circle me-2"></i>Post Job</a>
+            <a class="nav-link" href="{{ url_for('company_jobs') }}"><i class="bi bi-briefcase me-2"></i>My Jobs</a>
+        </nav>
+    </div>
+    <div class="main-content flex-grow-1">
+        <h4 class="mb-4">Company Dashboard</h4>
+        {% if not show_all_jobs %}
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 opacity-75">Active Jobs</h6>
+                        <h3 class="mb-0">{{ total_jobs|default(0) }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 opacity-75">Total Applications</h6>
+                        <h3 class="mb-0">{{ total_applications|default(0) }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Recent Jobs</span>
+                <a href="{{ url_for('company_post_job') }}" class="btn btn-sm btn-success">Post Job</a>
+            </div>
+            <div class="card-body p-0">
+                {% if jobs %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Job Title</th><th>Applications</th><th>Posted</th><th>Action</th></tr></thead>
+                        <tbody>
+                        {% for j in jobs %}
+                        <tr>
+                            <td>{{ j[1] }}</td>
+                            <td>{{ j[3] }}</td>
+                            <td>{{ j[2].strftime('%d %b %Y') if j[2] else '-' }}</td>
+                            <td><a href="{{ url_for('company_applicants', job_id=j[0]) }}" class="btn btn-sm btn-outline-primary">View Applicants</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted p-4 mb-0">No jobs posted yet. <a href="{{ url_for('company_post_job') }}">Post your first job</a>.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>All Posted Jobs</span>
+                <a href="{{ url_for('company_dashboard') }}" class="btn btn-sm btn-outline-secondary">Back to Dashboard</a>
+            </div>
+            <div class="card-body p-0">
+                {% if jobs_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead><tr><th>Job Title</th><th>Salary</th><th>Applications</th><th>Status</th><th>Posted</th><th>Actions</th></tr></thead>
+                        <tbody>
+                        {% for j in jobs_list %}
+                        <tr>
+                            <td>{{ j[1] }}</td>
+                            <td>{{ j[2] or '-' }}</td>
+                            <td>{{ j[5] }}</td>
+                            <td><span class="badge {{ 'bg-success' if j[3] else 'bg-secondary' }}">{{ 'Active' if j[3] else 'Inactive' }}</span></td>
+                            <td>{{ j[4].strftime('%d %b %Y') if j[4] else '-' }}</td>
+                            <td>
+                                <a href="{{ url_for('company_applicants', job_id=j[0]) }}" class="btn btn-sm btn-outline-primary">Applicants</a>
+                                <form method="post" action="{{ url_for('company_toggle_job', job_id=j[0]) }}" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-warning">{{ 'Deactivate' if j[3] else 'Activate' }}</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted p-4 mb-0">No jobs yet.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

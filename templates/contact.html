@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Contact - Campus Placement System by PRABHAV Holistic Health Institute{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-10">
+    <div class="mb-4">
+      <h1 class="hero-title text-dark mb-2">Contact</h1>
+      <p class="text-muted mb-0">
+        For placement-related support, please reach out to the placement cell. We’ll respond as soon as possible.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-7">
+        <div class="card">
+          <div class="card-header"><i class="bi bi-envelope-paper me-2"></i>Send a message</div>
+          <div class="card-body">
+            <form>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Name</label>
+                  <input type="text" class="form-control" placeholder="Your name" autocomplete="name">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" placeholder="you@email.com" autocomplete="email">
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Message</label>
+                  <textarea class="form-control" rows="4" placeholder="How can we help you?"></textarea>
+                  <div class="form-hint mt-2">This form is for UI only. You can connect it to email/DB later.</div>
+                </div>
+                <div class="col-12">
+                  <button type="button" class="btn btn-primary">
+                    <i class="bi bi-send me-2"></i>Send
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="card h-100">
+          <div class="card-header"><i class="bi bi-geo-alt me-2"></i>Placement Cell</div>
+          <div class="card-body">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <img src="{{ url_for('static', filename='img/prabhav-logo.png') }}" class="footer-logo" alt="PRABHAV Holistic Health Institute Logo">
+              <div>
+                <div class="fw-semibold">PRABHAV Holistic Health Institute</div>
+                <div class="text-muted small">Campus Placement System</div>
+              </div>
+            </div>
+            <div class="text-muted small">
+              <div class="mb-2"><i class="bi bi-envelope me-2"></i>placement@prabhav.edu (example)</div>
+              <div class="mb-2"><i class="bi bi-telephone me-2"></i>+91 00000 00000 (example)</div>
+              <div><i class="bi bi-clock me-2"></i>Mon–Fri, 9:00 AM – 5:00 PM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
