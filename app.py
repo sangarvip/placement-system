@@ -34,7 +34,7 @@ def init_admin():
     cur = get_db()
     cur.execute("SELECT COUNT(*) FROM admins")
     if cur.fetchone()[0] == 0:
-        hashed = bcrypt.hashpw(b'admin123', bcrypt.gensalt()).decode('utf-8')
+        hashed = bcrypt.hashpw(b'Admin@123', bcrypt.gensalt()).decode('utf-8')
         cur.execute(
             "INSERT INTO admins (email, password, name) VALUES (%s, %s, %s)",
             ('admin@placement.com', hashed, 'System Admin')
